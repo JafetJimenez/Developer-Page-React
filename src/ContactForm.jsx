@@ -1,68 +1,50 @@
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
+
 function ContactForm() {
-    const [nombre, setNombre] = useState("");
-    const [telefono, setTelefono] = useState("");
-    const [email, setEmail] = useState("");
-    const [mensaje, setMensaje] = useState("");
+    const form = useRef();
 
-    const handleInputChange = (event) => {
-        switch (event.target.name) {
-            case "nombre":
-                setNombre(event.target.value);
-                break;
-            case "telefono":
-                setTelefono(event.target.value);
-                break;
-            case "email":
-                setEmail(event.target.value);
-                break;
-            case "mensaje":
-                setMensaje(event.target.value);
-                break;
-            default:
-                break;
-        }
-    };
+    const sendEmail = (e) => {
+        e.preventDefault();
 
-    const enviarCorreo = (event) => {
-        event.preventDefault();
-
-        emailjs.sendForm('service_aj30', 'template_aj30', {nombre, telefono, email, mensaje}, {
-        publicKey: 'EoGSI8y0MgnDF5cXL',
+        emailjs.sendForm('service_aj30', 'template_aj30', form.current, {
+            publicKey: 'EoGSI8y0MgnDF5cXL',
         })
-         .then((response) => {
-             console.log('SUCCESS!', response.status, response.text);
-          }, (err) => {
-             console.log('FAILED...', err);
-          });
+        .then(
+            (response) => {
+                console.log('SUCCESS!', response.status, response.text);
+            },
+            (err) => {
+                console.log('FAILED...', err);
+            }
+        );
     };
 
     return (
         <section>
             <h2>Contacto</h2>
-            <form className="formulario" onSubmit={enviarCorreo}>
+            <form ref={form} className="formulario" onSubmit={sendEmail}>
                 <fieldset>
                     <legend>Contáctanos llenando todos los campos</legend>
                     <div className="contenedor-campos">
                         <div className="campo">
                             <label>Nombre</label>
-                            <input className="input-text" type="text" placeholder="Tu nombre" name="nombre" value={nombre} onChange={handleInputChange} />
+                            <input className="input-text" type="text" placeholder="Tu nombre" name="nombre" />
                         </div>
 
                         <div className="campo">
                             <label>Teléfono</label>
-                            <input className="input-text" type="tel" placeholder="Tu teléfono" name="telefono" value={telefono} onChange={handleInputChange} />
+                            <input className="input-text" type="tel" placeholder="Tu teléfono" name="telefono" />
                         </div>
 
                         <div className="campo">
                             <label>Correo electrónico</label>
-                            <input className="input-text" type="email" placeholder="Tu email" name="email" value={email} onChange={handleInputChange} />
+                            <input className="input-text" type="email" placeholder="Tu email" name="email" />
                         </div>
 
                         <div className="campo">
                             <label>Mensaje</label>
-                            <textarea className="input-text" name="mensaje" value={mensaje} onChange={handleInputChange}></textarea>
+                            <textarea className="input-text" name="mensaje"></textarea>
                         </div>
                     </div>
                     <div className="alinear-derecha flex">
