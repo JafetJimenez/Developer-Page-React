@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import emailjs from 'emailjs-com';
-
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 function ContactForm() {
     const [nombre, setNombre] = useState("");
     const [telefono, setTelefono] = useState("");
@@ -29,8 +28,8 @@ function ContactForm() {
     const enviarCorreo = (event) => {
         event.preventDefault();
 
-        emailjs.send('service_aj30', 'template_aj30', {nombre, telefono, email, mensaje}, {
-        PublicKeyCredential: 'EoGSI8y0MgnDF5cXL',
+        emailjs.sendForm('service_aj30', 'template_aj30', {nombre, telefono, email, mensaje}, {
+        publicKey: 'EoGSI8y0MgnDF5cXL',
         })
          .then((response) => {
              console.log('SUCCESS!', response.status, response.text);
