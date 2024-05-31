@@ -7,7 +7,7 @@ function ContactForm() {
     const sendEmail = (e) => {
         e.preventDefault();
 
-        emailjs.sendForm('service_aj30', 'template_aj30', form.current, {
+        emailjs.sendForm('service_aj30', 'template_aj30', {nombre, telefono, email,mensaje}, {
             publicKey: 'EoGSI8y0MgnDF5cXL',
         })
         .then(
