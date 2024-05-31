@@ -1,62 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
 
-class ContactForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-      email: '',
-      message: '',
+function ContactForm() {
+    const [nombre, setNombre] = useState("");
+    const [telefono, setTelefono] = useState("");
+    const [email, setEmail] = useState("");
+    const [mensaje, setMensaje] = useState("");
+
+    const handleInputChange = (event) => {
+        switch (event.target.name) {
+            case "nombre":
+                setNombre(event.target.value);
+                break;
+            case "telefono":
+                setTelefono(event.target.value);
+                break;
+            case "email":
+                setEmail(event.target.value);
+                break;
+            case "mensaje":
+                setMensaje(event.target.value);
+                break;
+            default:
+                break;
+        }
     };
-  }
 
-  handleInputChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
+    const enviarCorreo = (event) => {
+        event.preventDefault();
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(this.state);
-  }
+        emailjs.send('service_aj30', 'template_aj30', {nombre, telefono, email, mensaje}, 'aj30')
+         .then((response) => {
+             console.log('SUCCESS!', response.status, response.text);
+          }, (err) => {
+             console.log('FAILED...', err);
+          });
+    };
 
-  render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Nombre:
-          <input
-            name="name"
-            type="text"
-            required
-            value={this.state.name}
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <label>
-          Correo electrónico:
-          <input
-            name="email"
-            type="email"
-            required
-            value={this.state.email}
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <label>
-          Mensaje:
-          <textarea
-            name="message"
-            required
-            value={this.state.message}
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <input type="submit" value="Enviar" />
-      </form>
+        <section>
+            <h2>Contacto</h2>
+            <form className="formulario" onSubmit={enviarCorreo}>
+                <fieldset>
+                    <legend>Contáctanos llenando todos los campos</legend>
+                    <div className="contenedor-campos">
+                        <div className="campo">
+                            <label>Nombre</label>
+                            <input className="input-text" type="text" placeholder="Tu nombre" name="nombre" value={nombre} onChange={handleInputChange} />
+                        </div>
+
+                        <div className="campo">
+                            <label>Teléfono</label>
+                            <input className="input-text" type="tel" placeholder="Tu teléfono" name="telefono" value={telefono} onChange={handleInputChange} />
+                        </div>
+
+                        <div className="campo">
+                            <label>Correo electrónico</label>
+                            <input className="input-text" type="email" placeholder="Tu email" name="email" value={email} onChange={handleInputChange} />
+                        </div>
+
+                        <div className="campo">
+                            <label>Mensaje</label>
+                            <textarea className="input-text" name="mensaje" value={mensaje} onChange={handleInputChange}></textarea>
+                        </div>
+                    </div>
+                    <div className="alinear-derecha flex">
+                        <input className="boton w-sm-100" type="submit" value="Enviar" />
+                    </div>
+                </fieldset>
+            </form>
+        </section>
     );
-  }
 }
 
 export default ContactForm;
