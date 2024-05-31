@@ -19,6 +19,7 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.3.3",
     "emailjs-com": "^3.2.0"
   }
 }
