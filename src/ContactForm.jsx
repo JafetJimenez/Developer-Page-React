@@ -29,7 +29,7 @@ function ContactForm() {
     const enviarCorreo = (event) => {
         event.preventDefault();
 
-        emailjs.send('service_aj30', 'template_aj30', {nombre, telefono, email, mensaje}, 'aj30')
+        emailjs.send('service_aj30', 'template_aj30', {nombre, telefono, email, mensaje}, 'EoGSI8y0MgnDF5cXL')
          .then((response) => {
              console.log('SUCCESS!', response.status, response.text);
           }, (err) => {
