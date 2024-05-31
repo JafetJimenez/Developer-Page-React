@@ -8,7 +8,7 @@ function ContactForm() {
         e.preventDefault();
 
         emailjs.sendForm('service_aj30', 'template_aj30', form.current, {
-            publicKey: 'f7l-p4wdU54zlgXzQ4ewt',
+            publicKey: 'EoGSI8y0MgnDF5cXL',
         })
         .then(
             (response) => { 
