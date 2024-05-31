@@ -9,7 +9,6 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Route path="/" exact component={ContactForm} />
-      {/* Agrega más rutas aquí si tienes otros componentes */}
     </Router>
   </React.StrictMode>,
   document.getElementById('root')
